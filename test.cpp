@@ -86,35 +86,35 @@ void cariUser(int id) {
         }
         temp = temp->next;
     }
-    cout << "User tidak ditemukan\n";
+    cout << "\nUser tidak ditemukan...\n";
 }
 
 // updare user data
 void updateUser(int id) {
     Node* temp = head;
-
+    
     while (temp != NULL) {
         if (temp->id == id) {
             cout << "User ditemukan\n";
-
+            
             cout << "Nama baru: ";
             cin.ignore();
             getline(cin, temp->nama);
-
+            
             cout << "Temperature\t(-10 s/d 50) C\t: "; cin >> temp->temp;
             cout << "Humidity\t(0 s/d 100) %\t: "; cin >> temp->humidity;
             cout << "Air Quality\t(0 s/d 500)\t: "; cin >> temp->air;
             cout << "Smoke\t\t(0=tidak, 1=ada): "; cin >> temp->smoke;
             cout << "Noise\t\t(0 s/d 120) dB\t: "; cin >> temp->noise;
-
+            
             temp->score = hitungScore(temp->temp, temp->humidity, temp->air, temp->smoke, temp->noise);
-
+            
             cout << "Update berhasil\n";
             return;
         }
         temp = temp->next;
     }
-    cout << "User tidak ditemukan\n";
+    cout << "\nUser tidak ditemukan...\n";
 }
 
 // hapus
@@ -134,7 +134,7 @@ void hapusUser(int id) {
     }
 
     if (temp == NULL) {
-        cout << "User tidak ditemukan\n";
+        cout << "\nUser tidak ditemukan...\n";
         return;
     }
 
@@ -172,7 +172,7 @@ void sorting() {
 }
 
 // print
-void print() {
+void show() {
     if (head == NULL) {
         cout << "Data kosong\n";
         return;
@@ -184,24 +184,69 @@ void print() {
     int total = 0;
     float sum = 0;
 
+    int idealUser = 0;
+    int tidakIdealUser = 0;
+
+    //rekap sensor
+    int tIdeal = 0, hIdeal = 0, aIdeal = 0, sIdeal = 0, nIdeal = 0;
+
+    //hitung statistik data user
     while (temp != NULL) {
         total++;
         sum += temp->score;
+
+        if(temp->score == 100)
+            idealUser++;
+        else
+            tidakIdealUser++;
+
+        if(temp->temp >= 20 && temp->temp <= 27) tIdeal++;
+        if(temp->humidity >= 40 && temp->humidity <=60) hIdeal++;
+        if(temp->air >=  0 && temp->air <= 50) aIdeal++;
+        if(temp->smoke == 0) sIdeal++;
+        if(temp->noise >= 30 && temp->noise <= 55) nIdeal++;
+
         temp = temp->next;
     }
 
-    cout << "\n===== LAPORAN =====\n";
-    cout << "Total User: " << total << endl;
-    cout << "Rata-rata Score: " << sum / total << "%\n";
-
+    cout << "\n=================== LAPORAN ===================\n";
+    cout << "Statistik monitoring\n";
+    cout << "Jumlah user dengan pembacaan ideal\t: " << idealUser << endl;
+    cout << "Jumlah user dengan pembacaan tidak ideal: " << tidakIdealUser << endl;
+    cout << "Jumlah pelanggan\t\t\t: " << total << endl;
+    cout << "Rata-rata score\t\t\t\t: " << (int)(sum/total) << "%\n";
+    
+    //rekap sensor
+    cout << "===============================================\n";
+    cout << "Rekap sensor\n";
+    cout << "Temperature\t: " << tIdeal << " rumah\n";
+    cout << "Humidity\t: " << hIdeal << " rumah\n";
+    cout << "Air Quality\t: " << aIdeal << " rumah\n";
+    cout << "Smoke\t\t: " << sIdeal << " rumah\n";
+    cout << "Noise\t\t: " << nIdeal << " rumah\n";
+    cout << "===============================================\n";
+    
+    //data user
     temp = head;
     int rank = 1;
-
+    
     while (temp != NULL) {
-        cout << "\nPeringkat " << rank++ << endl;
-        cout << "ID: " << temp->id << endl;
-        cout << "Nama: " << temp->nama << endl;
-        cout << "Score: " << temp->score << "%\n";
+        cout << "Peringkat " << rank++ << endl;
+        cout << "ID\t\t: " << temp->id << endl;
+        cout << "Nama\t\t: " << temp->nama << endl;
+        cout << "Score\t\t: " << temp->score << "%\n";
+        
+        //wilayah (3 digit pertama ID)
+        cout << "Wilayah\t\t: " << temp->id / 1000 << endl;
+        cout << "Data Sensor\n";
+        cout << "Temp\t\t: " << temp->temp << "c\n";
+        cout << "Humidity\t: " << temp->humidity << "%\n";
+        cout << "Air Quality\t: " << temp->air << endl;
+        cout << "Smoke\t\t: " << temp->smoke << endl;
+        cout << "Noise\t\t: " << temp->noise << " dB\n";
+        
+        cout << "===============================================\n";
+
         temp = temp->next;
     }
 }
@@ -229,7 +274,7 @@ int main() {
                 cout << "ID: "; cin >> id;
                 hapusUser(id);
                 break;
-            case 5: print(); break;
+            case 5: show(); break;
         }
 
     } while (pilih != 0);
