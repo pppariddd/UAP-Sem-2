@@ -14,7 +14,7 @@ struct Node {
 
 Node* head = NULL;
 
-// ================== HITUNG SCORE ==================
+// hitung score
 float hitungScore(float t, float h, int a, bool s, float n) {
     int ideal = 0;
 
@@ -27,7 +27,7 @@ float hitungScore(float t, float h, int a, bool s, float n) {
     return (ideal / 5.0) * 100;
 }
 
-// ================== CEK ID ==================
+// cek ID
 bool cekID(int id) {
     Node* temp = head;
     while (temp != NULL) {
@@ -37,7 +37,7 @@ bool cekID(int id) {
     return false;
 }
 
-// ================== TAMBAH USER ==================
+// nambahin user
 void tambahUser() {
     Node* baru = new Node;
 
@@ -53,11 +53,11 @@ void tambahUser() {
     cin.ignore();
     getline(cin, baru->nama);
 
-    cout << "Temperature: "; cin >> baru->temp;
-    cout << "Humidity: "; cin >> baru->humidity;
-    cout << "Air Quality: "; cin >> baru->air;
-    cout << "Smoke (0/1): "; cin >> baru->smoke;
-    cout << "Noise: "; cin >> baru->noise;
+    cout << "Temperature\t(-10 s/d 50) C\t: "; cin >> baru->temp;
+    cout << "Humidity\t(0 s/d 100) %\t: "; cin >> baru->humidity;
+    cout << "Air Quality\t(0 s/d 500)\t: "; cin >> baru->air;
+    cout << "Smoke\t\t(0=tidak, 1=ada): "; cin >> baru->smoke;
+    cout << "Noise\t\t(0 s/d 120) dB\t: "; cin >> baru->noise;
 
     baru->score = hitungScore(baru->temp, baru->humidity, baru->air, baru->smoke, baru->noise);
     baru->next = NULL;
@@ -74,7 +74,7 @@ void tambahUser() {
     cout << "Berhasil tambah user\n";
 }
 
-// ================== CARI USER ==================
+// nyari user
 void cariUser(int id) {
     Node* temp = head;
     while (temp != NULL) {
@@ -89,7 +89,7 @@ void cariUser(int id) {
     cout << "User tidak ditemukan\n";
 }
 
-// ================== UPDATE ==================
+// updare user data
 void updateUser(int id) {
     Node* temp = head;
 
@@ -101,11 +101,11 @@ void updateUser(int id) {
             cin.ignore();
             getline(cin, temp->nama);
 
-            cout << "Temperature: "; cin >> temp->temp;
-            cout << "Humidity: "; cin >> temp->humidity;
-            cout << "Air Quality: "; cin >> temp->air;
-            cout << "Smoke: "; cin >> temp->smoke;
-            cout << "Noise: "; cin >> temp->noise;
+            cout << "Temperature\t(-10 s/d 50) C\t: "; cin >> temp->temp;
+            cout << "Humidity\t(0 s/d 100) %\t: "; cin >> temp->humidity;
+            cout << "Air Quality\t(0 s/d 500)\t: "; cin >> temp->air;
+            cout << "Smoke\t\t(0=tidak, 1=ada): "; cin >> temp->smoke;
+            cout << "Noise\t\t(0 s/d 120) dB\t: "; cin >> temp->noise;
 
             temp->score = hitungScore(temp->temp, temp->humidity, temp->air, temp->smoke, temp->noise);
 
@@ -117,7 +117,7 @@ void updateUser(int id) {
     cout << "User tidak ditemukan\n";
 }
 
-// ================== HAPUS ==================
+// hapus
 void hapusUser(int id) {
     Node *temp = head, *prev = NULL;
 
@@ -143,7 +143,7 @@ void hapusUser(int id) {
     cout << "User dihapus\n";
 }
 
-// ================== SORTING (BUBBLE SORT) ==================
+//sorting (buble short)
 void sorting() {
     if (head == NULL) return;
 
@@ -171,8 +171,8 @@ void sorting() {
     } while (swapped);
 }
 
-// ================== SHOW ==================
-void show() {
+// print
+void print() {
     if (head == NULL) {
         cout << "Data kosong\n";
         return;
@@ -206,7 +206,6 @@ void show() {
     }
 }
 
-// ================== MAIN ==================
 int main() {
     int pilih, id;
 
@@ -230,7 +229,7 @@ int main() {
                 cout << "ID: "; cin >> id;
                 hapusUser(id);
                 break;
-            case 5: show(); break;
+            case 5: print(); break;
         }
 
     } while (pilih != 0);
