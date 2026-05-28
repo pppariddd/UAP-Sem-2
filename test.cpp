@@ -37,11 +37,11 @@ bool cekID(int id) {
     return false;
 }
 
-// nambahin user
+// 1. nambahin user
 void tambahUser() {
     Node* baru = new Node;
 
-    cout << "ID: ";
+    cout << "\nID: ";
     cin >> baru->id;
 
     if (cekID(baru->id)) {
@@ -71,17 +71,21 @@ void tambahUser() {
         temp->next = baru;
     }
 
-    cout << "Berhasil tambah user\n";
+    cout << "\nBerhasil tambah user\n";
+    cout << "User ID\t\t: " << baru->id << endl;
+    cout << "Nama User\t: " << baru->nama << endl;
+    cout << "Monitoring Score: " << baru->score << "%\n";
 }
 
-// nyari user
+// 2. nyari user
 void cariUser(int id) {
     Node* temp = head;
     while (temp != NULL) {
         if (temp->id == id) {
-            cout << "User ditemukan\n";
-            cout << "Nama: " << temp->nama << endl;
-            cout << "Score: " << temp->score << "%\n";
+            cout << "\nUser ditemukan\n";
+            cout << "User ID\t\t: " << temp->id << endl;
+            cout << "Nama User\t: " << temp->nama << endl;
+            cout << "Monitoring Score: " << temp->score << "%\n";
             return;
         }
         temp = temp->next;
@@ -89,13 +93,13 @@ void cariUser(int id) {
     cout << "\nUser tidak ditemukan...\n";
 }
 
-// updare user data
+// 3. updare user data
 void updateUser(int id) {
     Node* temp = head;
     
     while (temp != NULL) {
         if (temp->id == id) {
-            cout << "User ditemukan\n";
+            cout << "\nUser ditemukan\n";
             
             cout << "Nama baru: ";
             cin.ignore();
@@ -109,7 +113,8 @@ void updateUser(int id) {
             
             temp->score = hitungScore(temp->temp, temp->humidity, temp->air, temp->smoke, temp->noise);
             
-            cout << "Update berhasil\n";
+            cout << "\nUpdate berhasil\n";
+            cout << "New Monitoring Score : " << temp->score << "%\n";
             return;
         }
         temp = temp->next;
@@ -117,14 +122,14 @@ void updateUser(int id) {
     cout << "\nUser tidak ditemukan...\n";
 }
 
-// hapus
+// 4. hapus
 void hapusUser(int id) {
     Node *temp = head, *prev = NULL;
 
     if (temp != NULL && temp->id == id) {
         head = temp->next;
         delete temp;
-        cout << "User dihapus\n";
+        cout << "\nUser dengan ID " << id << " berhasil dihapus dari sistem\n";
         return;
     }
 
@@ -140,7 +145,7 @@ void hapusUser(int id) {
 
     prev->next = temp->next;
     delete temp;
-    cout << "User dihapus\n";
+    cout << "\nUser dengan ID " << id << " berhasil dihapus dari sistem\n";
 }
 
 //sorting (buble short)
@@ -171,7 +176,7 @@ void sorting() {
     } while (swapped);
 }
 
-// print
+// 5. print
 void show() {
     if (head == NULL) {
         cout << "Data kosong\n";
@@ -237,8 +242,8 @@ void show() {
         cout << "Score\t\t: " << temp->score << "%\n";
         
         //wilayah (3 digit pertama ID)
-        cout << "Wilayah\t\t: " << temp->id / 1000 << endl;
-        cout << "Data Sensor\n";
+        cout << "Wilayah\t\t: " << rank - 1 << endl;
+        cout << "\nData Sensor\n";
         cout << "Temp\t\t: " << temp->temp << "c\n";
         cout << "Humidity\t: " << temp->humidity << "%\n";
         cout << "Air Quality\t: " << temp->air << endl;
@@ -261,22 +266,38 @@ int main() {
         cin >> pilih;
 
         switch (pilih) {
-            case 1: tambahUser(); break;
+            case 1: 
+                tambahUser(); 
+                break;
+
             case 2:
-                cout << "ID: "; cin >> id;
+                cout << "\nID: "; cin >> id;
                 cariUser(id);
                 break;
+
             case 3:
-                cout << "ID: "; cin >> id;
+                cout << "\nID: "; cin >> id;
                 updateUser(id);
                 break;
+
             case 4:
-                cout << "ID: "; cin >> id;
+                cout << "\nID: "; 
+                cin >> id;
                 hapusUser(id);
                 break;
-            case 5: show(); break;
-        }
 
+            case 5: 
+                show(); 
+                break;
+
+            case 0:
+                cout << "\nProgram Selesai.\n";
+                break;
+
+            default:
+                cout << "\nPilihan tidak valid!\n";
+                break;
+        }
     } while (pilih != 0);
 
     return 0;
